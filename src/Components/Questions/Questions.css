@@ -1,0 +1,16 @@
+.questions {
+  height: 100vh;
+  width: 100wv;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.questions__question {
+  text-align: center;
+}
+
+.questions__progress {
+  width: 100%;
+  height: 1rem;
+}

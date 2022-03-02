@@ -1,0 +1,41 @@
+.box {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  position: relative;
+  height: auto;
+  width: 40%;
+  border-radius: 1.5rem !important;
+  padding: 1rem;
+}
+.card__image {
+  display: flex;
+  height: 60%;
+  justify-content: center;
+  align-items: center;
+}
+
+div .MuiCardActions-root {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0;
+  margin: 0;
+}
+
+@media only screen and (max-width: 1000px) {
+  .card {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    width: 100%;
+    height: 100%;
+    border-radius: 0 !important;
+  }
+}
