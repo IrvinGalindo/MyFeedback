@@ -1,8 +1,8 @@
 import { Rating, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import "./InputType.css";
 
-const InputType = ({ type, nextQuestion, index, setText }) => {
+const InputType = ({ type, nextQuestion, index, setText, text }) => {
   switch (type) {
     case "star":
       return (
@@ -24,11 +24,12 @@ const InputType = ({ type, nextQuestion, index, setText }) => {
             rows={3}
             className="questions__opened"
             onChange={(event) => setText(event.target.value)}
+            value={text}
           />
         </>
       );
     default:
-      return <>{type}</>;
+      return <></>;
   }
 };
 

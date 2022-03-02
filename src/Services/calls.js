@@ -14,7 +14,6 @@ const collectionRef = collection(db, "questions");
 export const getQuestions = async () => {
   const queryQuestion = query(collectionRef, orderBy("createdAt"));
   const docsCollection = await getDocs(queryQuestion);
-  console.log(docsCollection);
   return docsCollection.docs.map((doc) => ({ ...doc.data() }));
 };
 

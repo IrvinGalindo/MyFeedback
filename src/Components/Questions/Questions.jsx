@@ -21,7 +21,7 @@ import InputType from "./InputType/InputType";
 const Questions = () => {
   const [questionFade, setQuestionFade] = useState(true);
   const [index, setIndex] = useState(0);
-  const [text, setText] = useState(0);
+  const [text, setText] = useState();
   const [questions, setQuestions] = useState([]);
   const userIp = useLocation().state.userIp;
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Questions = () => {
     if (index > 0) setIndex(index - 1);
   };
 
-  const nextQuestion = (rating) => {
+  const nextQuestion = (userAnswer) => {
     const answers = questions[index].answers;
     const answerIndex = answers.findIndex(
       (answer) => answer.respondent === userIp
@@ -54,19 +54,18 @@ const Questions = () => {
     if (answerIndex === -1) {
       answers.push({
         respondent: userIp,
-        answer: rating,
+        answer: userAnswer,
       });
     } else {
       answers[answerIndex] = {
         ...answers[answerIndex],
-        answer: rating,
+        answer: userAnswer,
       };
     }
     setQuestionFade(false);
     updateQuestion(questions[index]);
-    if (index === questions.length - 1) {
-      navigate("/gratitude");
-    }
+    questions[index].type === "textField" && setText("");
+    index === questions.length - 1 && navigate("/gratitude");
   };
 
   return questions?.length > 0 ? (
@@ -93,6 +92,7 @@ const Questions = () => {
                     nextQuestion={nextQuestion}
                     index={index}
                     setText={setText}
+                    text={text}
                   />
                 </Box>
               </Fade>
