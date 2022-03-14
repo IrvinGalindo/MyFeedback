@@ -13,18 +13,29 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Lottie from "react-lottie";
 import StarLottie from "../../assets/animations/Star.json";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getQuestions, updateQuestion } from "../../Services/calls";
 import CustomSkeleton from "../CustomSkeleton/CustomSkeleton";
 import "./Questions.css";
 import InputType from "./InputType/InputType";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchQuestions,
+  questionsSelector,
+  updateAnswers,
+} from "../../Services/redux/reducers/questionsReducer";
 
 const Questions = () => {
   const [questionFade, setQuestionFade] = useState(true);
   const [index, setIndex] = useState(0);
   const [text, setText] = useState();
-  const [questions, setQuestions] = useState([]);
   const userIp = useLocation().state.userIp;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { questions } = useSelector(questionsSelector);
+  //const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchQuestions());
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -33,37 +44,18 @@ const Questions = () => {
     }, 1000);
   }, [questionFade, questions.length]);
 
-  useEffect(() => {
-    fetchQuestions();
-  }, []);
-
-  const fetchQuestions = async () => {
-    const docs = await getQuestions();
-    setQuestions(docs);
-  };
+  // const fetchQuestions = async () => {
+  //   const docs = await getQuestions();
+  //   setQuestions(docs);
+  // };
 
   const backToPreviousQuestion = () => {
     if (index > 0) setIndex(index - 1);
   };
 
   const nextQuestion = (userAnswer) => {
-    const answers = questions[index].answers;
-    const answerIndex = answers.findIndex(
-      (answer) => answer.respondent === userIp
-    );
-    if (answerIndex === -1) {
-      answers.push({
-        respondent: userIp,
-        answer: userAnswer,
-      });
-    } else {
-      answers[answerIndex] = {
-        ...answers[answerIndex],
-        answer: userAnswer,
-      };
-    }
     setQuestionFade(false);
-    updateQuestion(questions[index]);
+    dispatch(updateAnswers(userAnswer, userIp, index));
     questions[index].type === "textField" && setText("");
     index === questions.length - 1 && navigate("/gratitude");
   };
