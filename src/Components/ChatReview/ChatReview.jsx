@@ -43,7 +43,7 @@ const ChatReview = ({ question }) => {
                     <Avatar alt={answer.respondent} src="No avatar" />
                   </ListItemAvatar>
                   <ListItemText
-                    primary={answer.respondent}
+                    primary={`${answer.respondent} commented`}
                     secondary={<React.Fragment>{answer.answer}</React.Fragment>}
                   />
                 </ListItem>

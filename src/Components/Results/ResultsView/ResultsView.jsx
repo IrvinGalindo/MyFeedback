@@ -64,7 +64,7 @@ const ResultsView = () => {
           component="div"
           sx={{ marginBottom: 3 }}
         >
-          Here, you can see all the feedback results shown in amazing charts.
+          Here, you can see all the feedback results shown in amazing graphs.
         </Typography>
         <CardContent>
           <Box className="result-details">
