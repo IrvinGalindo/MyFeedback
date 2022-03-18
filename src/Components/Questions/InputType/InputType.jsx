@@ -8,7 +8,7 @@ const InputType = ({ type, nextQuestion, index, setText, text }) => {
       return (
         <Rating
           name={`Rating question ${index}`}
-          className="questions__rating"
+          className="questions-rating"
           value={null}
           onChange={(_, newValue) => {
             nextQuestion(newValue);
@@ -22,7 +22,7 @@ const InputType = ({ type, nextQuestion, index, setText, text }) => {
             id={`opened question ${index}`}
             multiline
             rows={3}
-            className="questions__opened"
+            className="questions-opened"
             onChange={(event) => setText(event.target.value)}
             value={text}
           />

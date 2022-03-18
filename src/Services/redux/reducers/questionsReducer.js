@@ -13,14 +13,15 @@ export const questionSlice = createSlice({
       state.questions = action.payload;
     },
     updateAnswer: (state, action) => {
-      const { userIp, userAnswer, index } = action.payload;
+      const { userName, userIp, userAnswer, index } = action.payload;
       const answers = state.questions[index].answers;
       const answerIndex = answers.findIndex(
-        (answer) => answer.respondent === userIp
+        (answer) => answer.userIp === userIp
       );
       if (answerIndex === -1) {
         answers.push({
-          respondent: userIp,
+          respondent: userName,
+          userIp: userIp,
           answer: userAnswer,
         });
       } else {
@@ -35,7 +36,6 @@ export const questionSlice = createSlice({
 export const { setQuestions, updateAnswer } = questionSlice.actions;
 
 export const questionsSelector = (state) => state.reducer.questions;
-
 export default questionSlice.reducer;
 
 export function fetchQuestions() {
@@ -45,9 +45,9 @@ export function fetchQuestions() {
   };
 }
 
-export function updateAnswers(userAnswer, userIp, index) {
+export function updateAnswers(userName, userAnswer, userIp, index) {
   return async (dispatch, getState) => {
-    dispatch(updateAnswer({ userAnswer, userIp, index }));
+    dispatch(updateAnswer({ userName, userAnswer, userIp, index }));
     updateQuestion(getState().reducer.questions.questions[index]);
   };
 }

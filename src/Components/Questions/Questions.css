@@ -6,11 +6,10 @@
   justify-content: center;
 }
 
-.questions__question {
+.questions-question {
   text-align: center;
 }
 
-.questions__progress {
-  width: 100%;
+.questions-progress {
   height: 1rem;
 }

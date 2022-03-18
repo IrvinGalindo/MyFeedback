@@ -22,20 +22,20 @@ import {
   questionsSelector,
   updateAnswers,
 } from "../../Services/redux/reducers/questionsReducer";
+import { TEXT_FIELD } from "../../types/questions";
 
 const Questions = () => {
   const [questionFade, setQuestionFade] = useState(true);
   const [index, setIndex] = useState(0);
   const [text, setText] = useState();
-  const userIp = useLocation().state.userIp;
+  const { userIp, userName } = useLocation().state;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { questions } = useSelector(questionsSelector);
-  //const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     dispatch(fetchQuestions());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,20 +44,15 @@ const Questions = () => {
     }, 1000);
   }, [questionFade, questions.length]);
 
-  // const fetchQuestions = async () => {
-  //   const docs = await getQuestions();
-  //   setQuestions(docs);
-  // };
-
   const backToPreviousQuestion = () => {
     if (index > 0) setIndex(index - 1);
   };
 
   const nextQuestion = (userAnswer) => {
     setQuestionFade(false);
-    dispatch(updateAnswers(userAnswer, userIp, index));
-    questions[index].type === "textField" && setText("");
-    index === questions.length - 1 && navigate("/gratitude");
+    dispatch(updateAnswers(userName, userAnswer, userIp, index));
+    questions[index].type === TEXT_FIELD && setText("");
+    index === questions.length - 1 && navigate("/Gratitude");
   };
 
   return questions?.length > 0 ? (
@@ -70,7 +65,7 @@ const Questions = () => {
                 Hey Friend!!
               </Typography>
               <Fade in={questionFade}>
-                <Box className="questions__question">
+                <Box className="questions-question">
                   <Typography
                     gutterBottom
                     variant="h5"
@@ -89,7 +84,7 @@ const Questions = () => {
                 </Box>
               </Fade>
             </Box>
-            <Box className="card__image">
+            <Box className="card-image">
               <Lottie
                 options={{
                   loop: true,
@@ -100,8 +95,7 @@ const Questions = () => {
                 width={250}
               />
             </Box>
-
-            <CardActions className="questions__progress">
+            <CardActions className="questions-progress">
               <Box sx={{ width: "100%", marginBottom: 1 }}>
                 <Box
                   sx={{
@@ -112,12 +106,14 @@ const Questions = () => {
                 >
                   {index > 0 && (
                     <ArrowBackRoundedIcon
+                      color="info"
                       sx={{ marginLeft: 2, cursor: "pointer" }}
                       onClick={() => backToPreviousQuestion()}
                     />
                   )}
-                  {questions[index].type === "textField" && (
+                  {questions[index].type === TEXT_FIELD && (
                     <ArrowForwardIcon
+                      color="info"
                       sx={{ marginLeft: 2, cursor: "pointer" }}
                       onClick={() => nextQuestion(text)}
                     />

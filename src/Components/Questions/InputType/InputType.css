@@ -1,7 +1,7 @@
-.questions__rating label {
+.questions-rating label {
   font-size: 4rem;
 }
 
-.questions__opened {
+.questions-opened {
   width: 100%;
 }
