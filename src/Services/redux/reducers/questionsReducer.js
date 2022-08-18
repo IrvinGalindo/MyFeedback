@@ -16,7 +16,7 @@ export const questionSlice = createSlice({
       const { userName, userIp, userAnswer, index } = action.payload;
       const answers = state.questions[index].answers;
       const answerIndex = answers.findIndex(
-        (answer) => answer.userIp === userIp
+        (answer) => answer.userIp === userIp && answer.respondent === userName
       );
       if (answerIndex === -1) {
         answers.push({

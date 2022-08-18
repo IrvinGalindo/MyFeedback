@@ -111,7 +111,7 @@ const Questions = () => {
                       onClick={() => backToPreviousQuestion()}
                     />
                   )}
-                  {questions[index].type === TEXT_FIELD && (
+                  {(questions[index].type === TEXT_FIELD && text?.trim()) && (
                     <ArrowForwardIcon
                       color="info"
                       sx={{ marginLeft: 2, cursor: "pointer" }}
